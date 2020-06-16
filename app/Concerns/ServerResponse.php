@@ -23,6 +23,14 @@ trait ServerResponse
         RouteNotFoundException::class => 401,
     ];
 
+    /**
+     * Handles request exceptions and format the error to JSON.
+     *
+     * @param Request $request
+     * @param Exception $exception
+     * @param boolean $rawError
+     * @return json-response
+     */
     public function apiExceptions(Request $request, $exception, bool $rawError = false)
     {
         if ($rawError) {
@@ -49,6 +57,23 @@ trait ServerResponse
             'exception'      => get_class($exception),
             'statusCode' => $statusCode,
             'message'    => $message,
+        ], $statusCode);
+    }
+
+    /**
+     * Formats the response into JSON response with a "data" key.
+     *
+     * @param mixed $data
+     * @param integer $statusCode
+     * @return void
+     */
+    public function apiDataResponse($data, $statusCode = 200)
+    {
+        if (is_object($data))
+            $data = (array) $data;
+
+        return response()->json([
+            'data' => $data
         ], $statusCode);
     }
 }
