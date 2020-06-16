@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Concerns\ServerResponse;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ServerResponse;
     /**
      * A list of the exception types that are not reported.
      *
@@ -48,6 +50,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        return $this->apiExceptions($request, $exception);
     }
 }
