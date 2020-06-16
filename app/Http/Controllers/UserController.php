@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\SaveRequest;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
@@ -21,8 +22,17 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function update(User $user)
+    /**
+     * Updates the name of the given user.
+     *
+     * @param User $user
+     * @param SaveRequest $request
+     * @return void
+     */
+    public function update(User $user, SaveRequest $request)
     {
-        # code...
+        $user->update($request->validated());
+
+        return new UserResource($user->fresh());
     }
 }
