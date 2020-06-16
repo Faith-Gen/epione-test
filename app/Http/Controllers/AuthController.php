@@ -11,7 +11,7 @@ class AuthController extends Controller
      * Logs in the user.
      *
      * @param LoginRequest $request
-     * @return void
+     * @return JSON
      */
     public function login(LoginRequest $request)
     {
@@ -23,10 +23,32 @@ class AuthController extends Controller
     }
 
     /**
+     * Logs out the user.
+     *
+     * @return JSON
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return $this->apiMessageResponse('Successfully logged out');
+    }
+
+    /**
+     * Refreshes the auth token.
+     *
+     * @return JSON
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
      * Formats successful auth attempts.
      *
      * @param string $token
-     * @return void
+     * @return json
      */
     private function respondWithToken(string $token)
     {

@@ -76,4 +76,18 @@ trait ServerResponse
             'data' => $data
         ], $statusCode);
     }
+
+    /**
+     * Returns a message wrapped in data key.
+     *
+     * @param string $message
+     * @param integer $statusCode
+     * @return JSON
+     */
+    public function apiMessageResponse(string $message, $statusCode = 200)
+    {
+        return $this->apiDataResponse([
+            'message' => $message
+        ], $statusCode);
+    }
 }
