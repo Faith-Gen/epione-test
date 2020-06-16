@@ -1,53 +1,36 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# EPIONE API SETUP
+> Postman API Documentation
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+> [https://documenter.getpostman.com/view/7034853/Szzj8J4C](https://documenter.getpostman.com/view/7034853/Szzj8J4C)
 
-## About Laravel
+### Installing project
+* ```composer install``` to install dependencies
+* ```cp .env.example .env``` to copy environment file to the project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Preparing project
+* Create a MySQL database and name it what you want eg ```innoflash_epione``` and open the ```.env``` file copied into the API folder root and configure your database at the DB section of the file ```line 11 - 13```
+* ```php artisan setup``` Had to setup the command to speed up testing :)
+> The `setup` command takes care of:
+* Generating app key.
+* Generating JWT secret.
+* Migrating tables.
+* Seeding books and some dummy users.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Testing
+After the data is seeded there is a test user.
+* Test ```email = test@email.com```
+* Test ```password = secret```
+* Test ```user_id = 1```
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
+### Issues found.
+When I was working on the `User Management` and `User Books API` I realized that those endpoints are giving in a user in the route.
 
-## Learning Laravel
+This usually posed a data leak because any logged in user can have access to any other user`s data. 
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+I created a [LibrarianMiddleware](./app/Http/Middleware/LibrarianMiddleware.php) that will keep the logic of permitting or blocking a certain user from accessing random data. 
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+I used the middleware on the API endpoints that carry the user in the request payload.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+> The last endpoint queries for an individual book record but in reality there is more than one entry in the database where the user can possibly checkout the same book. <br/>
+Anyways I have picked the last log of that user for the same user.
