@@ -38,8 +38,21 @@ class BookController extends Controller
         return new BooksResource($book);
     }
 
+    /**
+     * Checks out a book from the library.
+     *
+     * @param Book $book
+     * @param CheckoutRequest $request
+     * @param LibraryService $service
+     * @return void
+     */
     public function checkout(Book $book, CheckoutRequest $request, LibraryService $service)
     {
         return $service->checkout(auth()->user(), $book);
+    }
+
+    public function return(Book $book, LibraryService $service)
+    {
+        return $service->return(auth()->user(), $book);
     }
 }

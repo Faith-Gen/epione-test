@@ -30,4 +30,5 @@ Route::prefix('books')
         Route::get('', 'BookController@index')->name('index');
         Route::get('{book}', 'BookController@show');
         Route::post('{book}/checkout', 'BookController@checkout');
+        Route::post('{book}/return', 'BookController@return');
     });

@@ -21,4 +21,19 @@ class LibraryService
 
         return new BookLog($book);
     }
+
+    public function return(User $user, Book $book)
+    {
+        if ($book->is_available)
+            abort(403, 'The book is already in the library');
+
+        $updated = $user->books()->updateExistingPivot($book->id, [
+            'returned_at' => now()
+        ]);
+
+        if ($updated)
+            return new BookLog($book->refresh());
+
+        abort(500, 'Failed to mark the book returned');
+    }
 }
