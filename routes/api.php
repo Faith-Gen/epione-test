@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('auth')
+    ->name('auth.')
     ->group(function () {
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout')->middleware('auth:api');
@@ -31,4 +32,10 @@ Route::prefix('books')
         Route::get('{book}', 'BookController@show');
         Route::post('{book}/checkout', 'BookController@checkout');
         Route::post('{book}/return', 'BookController@return');
+    });
+
+Route::prefix('user')
+    ->name('user.')
+    ->middleware(['auth:api', 'librarian'])
+    ->group(function () {
     });

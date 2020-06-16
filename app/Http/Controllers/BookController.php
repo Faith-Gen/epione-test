@@ -51,6 +51,13 @@ class BookController extends Controller
         return $service->checkout(auth()->user(), $book);
     }
 
+    /**
+     * Returns a book into the library.
+     *
+     * @param Book $book
+     * @param LibraryService $service
+     * @return void
+     */
     public function return(Book $book, LibraryService $service)
     {
         return $service->return(auth()->user(), $book);
