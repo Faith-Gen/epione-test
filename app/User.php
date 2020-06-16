@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Book;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -26,4 +28,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Relates this user to many books.
+     *
+     * @return BelongsToMany
+     */
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'user_books')
+            ->withTimestamps()
+            ->withPivot(['due_at', 'returned_at']);
+    }
 }
