@@ -22,3 +22,9 @@ Route::prefix('auth')
         Route::post('refresh', 'AuthController@refresh')->middleware('auth:api');
         Route::post('register', 'AuthController@register');
     });
+
+Route::prefix('books')
+    ->middleware('auth:api')
+    ->group(function () {
+        Route::get('', 'BookController@index');
+    });
