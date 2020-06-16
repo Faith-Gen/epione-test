@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\User\RegisterRequest;
+use App\Http\Requests\User\SaveRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -46,7 +46,13 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * Creates a new user.
+     *
+     * @param SaveRequest $request
+     * @return void
+     */
+    public function register(SaveRequest $request)
     {
         return $this->apiDataResponse(User::create($request->validated())->toArray(), 201);
     }

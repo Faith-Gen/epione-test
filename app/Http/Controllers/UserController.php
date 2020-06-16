@@ -20,4 +20,9 @@ class UserController extends Controller
 
         return new UserResource($user);
     }
+
+    public function update(User $user)
+    {
+        # code...
+    }
 }
