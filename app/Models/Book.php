@@ -31,8 +31,8 @@ class Book extends Model
      */
     public function getIsAvailableAttribute(): bool
     {
-        $checkedOutBooks = $this->users->filter(function ($user) {
-            return $user->pivot->returned_at = null;
+        $checkedOutBooks = $this->users->flatten()->filter(function ($data) {
+            return $data->pivot->returned_at == null;
         })->count();
 
         if ($checkedOutBooks) return false;

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Book\CheckoutRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Resources\Book as BooksResource;
+use App\Services\LibraryService;
 
 class BookController extends Controller
 {
@@ -25,8 +27,19 @@ class BookController extends Controller
         return BooksResource::collection($books);
     }
 
+    /**
+     * Shows the book details.
+     *
+     * @param Book $book
+     * @return void
+     */
     public function show(Book $book)
     {
         return new BooksResource($book);
+    }
+
+    public function checkout(Book $book, CheckoutRequest $request, LibraryService $service)
+    {
+        return $service->checkout(auth()->user(), $book);
     }
 }
