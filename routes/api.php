@@ -38,4 +38,5 @@ Route::prefix('user')
     ->name('user.')
     ->middleware(['auth:api', 'librarian'])
     ->group(function () {
+        Route::get('{user}', 'UserController@show');
     });
