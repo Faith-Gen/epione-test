@@ -15,7 +15,7 @@ class UserController extends Controller
      * Gets the user details.
      *
      * @param User $user
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(User $user)
     {
@@ -29,7 +29,7 @@ class UserController extends Controller
      *
      * @param User $user
      * @param SaveRequest $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(User $user, SaveRequest $request)
     {
@@ -42,7 +42,7 @@ class UserController extends Controller
      * Get user book logs.
      *
      * @param User $user
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function userBooks(User $user)
     {
@@ -61,7 +61,7 @@ class UserController extends Controller
      *
      * @param User $user
      * @param Book $book
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showUserBook(User $user, Book $book)
     {

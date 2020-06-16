@@ -29,7 +29,7 @@ trait ServerResponse
      * @param Request $request
      * @param Exception $exception
      * @param boolean $rawError
-     * @return json-response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function apiExceptions(Request $request, $exception, bool $rawError = false)
     {
@@ -62,10 +62,10 @@ trait ServerResponse
 
     /**
      * Formats the response into JSON response with a "data" key.
+     * @param $data
+     * @param  int  $statusCode
      *
-     * @param mixed $data
-     * @param integer $statusCode
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function apiDataResponse($data, $statusCode = 200)
     {
@@ -82,7 +82,7 @@ trait ServerResponse
      *
      * @param string $message
      * @param integer $statusCode
-     * @return JSON
+     * @return \Illuminate\Http\JsonResponse
      */
     public function apiMessageResponse(string $message, $statusCode = 200)
     {

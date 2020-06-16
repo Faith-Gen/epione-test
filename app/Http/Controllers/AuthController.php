@@ -13,7 +13,7 @@ class AuthController extends Controller
      * Logs in the user.
      *
      * @param LoginRequest $request
-     * @return JSON
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request)
     {
@@ -27,7 +27,7 @@ class AuthController extends Controller
     /**
      * Logs out the user.
      *
-     * @return JSON
+     * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
     {
@@ -39,7 +39,7 @@ class AuthController extends Controller
     /**
      * Refreshes the auth token.
      *
-     * @return JSON
+     * @return \Illuminate\Http\JsonResponse
      */
     public function refresh()
     {
@@ -50,7 +50,7 @@ class AuthController extends Controller
      * Creates a new user.
      *
      * @param SaveRequest $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function register(SaveRequest $request)
     {
@@ -61,7 +61,7 @@ class AuthController extends Controller
      * Formats successful auth attempts.
      *
      * @param string $token
-     * @return json
+     * @return \Illuminate\Http\JsonResponse
      */
     private function respondWithToken(string $token)
     {

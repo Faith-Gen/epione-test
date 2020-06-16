@@ -13,7 +13,7 @@ class BookController extends Controller
     /**
      * Lists/searches books.
      *
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -31,7 +31,7 @@ class BookController extends Controller
      * Shows the book details.
      *
      * @param Book $book
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Book $book)
     {
@@ -44,7 +44,7 @@ class BookController extends Controller
      * @param Book $book
      * @param CheckoutRequest $request
      * @param LibraryService $service
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function checkout(Book $book, CheckoutRequest $request, LibraryService $service)
     {
@@ -56,7 +56,7 @@ class BookController extends Controller
      *
      * @param Book $book
      * @param LibraryService $service
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function return(Book $book, LibraryService $service)
     {
