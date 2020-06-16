@@ -41,4 +41,5 @@ Route::prefix('user')
         Route::get('{user}', 'UserController@show');
         Route::put('{user}', 'UserController@update');
         Route::get('{user}/books', 'UserController@userBooks');
+        Route::get('{user}/books/{book}', 'UserController@showUserBook');
     });

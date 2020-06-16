@@ -7,6 +7,7 @@ use App\Http\Resources\BookLog;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
+use App\Models\Book;
 
 class UserController extends Controller
 {
@@ -53,5 +54,24 @@ class UserController extends Controller
             $books->whereNull('returned_at');
 
         return BookLog::collection($books->paginate(50));
+    }
+
+    /**
+     * Shows the details of a book borrowing.
+     *
+     * @param User $user
+     * @param Book $book
+     * @return void
+     */
+    public function showUserBook(User $user, Book $book)
+    {
+        $this->authorize('view', $user);
+
+        $book = $user->books()->where('user_books.book_id', $book->id)->latest()->first();
+
+        if ($book)
+            return new BookLog($book);
+
+        abort(403, 'This user doesnt have logs for that book!');
     }
 }
