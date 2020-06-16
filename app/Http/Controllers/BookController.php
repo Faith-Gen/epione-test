@@ -8,6 +8,11 @@ use App\Http\Resources\Book as BooksResource;
 
 class BookController extends Controller
 {
+    /**
+     * Lists/searches books.
+     *
+     * @return void
+     */
     public function index()
     {
         $books = Book::query();
@@ -18,5 +23,10 @@ class BookController extends Controller
         $books = $books->paginate(50);
 
         return BooksResource::collection($books);
+    }
+
+    public function show(Book $book)
+    {
+        return new BooksResource($book);
     }
 }

@@ -25,6 +25,8 @@ Route::prefix('auth')
 
 Route::prefix('books')
     ->middleware('auth:api')
+    ->name('books.')
     ->group(function () {
-        Route::get('', 'BookController@index');
+        Route::get('', 'BookController@index')->name('index');
+        Route::get('{book}', 'BookController@show');
     });
