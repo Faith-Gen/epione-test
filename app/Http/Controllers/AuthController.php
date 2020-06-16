@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\User\RegisterRequest;
+use App\User;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -42,6 +44,11 @@ class AuthController extends Controller
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh());
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        return $this->apiDataResponse(User::create($request->validated())->toArray(), 201);
     }
 
     /**
