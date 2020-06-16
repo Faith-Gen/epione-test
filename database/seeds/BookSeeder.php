@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Pipeline\Pipeline;
 
 class BookSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $books = app(Pipeline::class);
     }
 }
